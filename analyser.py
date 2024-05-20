@@ -49,6 +49,8 @@ def analyse_website(base_url):
             except Exception as exc:
                 print(f"{url} generated an exception: {exc}")
 
+    load_times.sort(key=lambda x: x[1] if x[1] is not None else float('inf'), reverse=True)
+
     return load_times
 
 def main():

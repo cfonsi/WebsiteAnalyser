@@ -9,7 +9,7 @@ def get_loading_time(url):
         response = requests.get(url)
         end_time = time.time()
         load_time = end_time - start_time
-        return url, load_time
+        return url, load_time, response.status_code
     except requests.RequestException as e:
         return url, str(e)
 
@@ -58,8 +58,11 @@ def main():
     loading_times = analyse_website(base_url)
 
     print("\nComponent load times (in seconds):")
-    for url, load_time in loading_times:
-        print(f"{url}: {load_time:.2f} seconds")
+    for url, load_time, status in loading_times:
+        if load_time is not None:
+            print(f"{url}: {load_time:.2f} seconds")
+        else:
+            print(f"{url}: Load time could not be determined (Status: {status})")
 
 if __name__ == "__main__":
     main()
